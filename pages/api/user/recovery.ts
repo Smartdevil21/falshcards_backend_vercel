@@ -7,6 +7,10 @@ export default async function recoveryEmailHandler(
   res: NextApiResponse
 ) {
   try {
+    const { method } = req;
+    if (method === "OPTIONS") {
+      return res.status(200).send("ok");
+    }
     const result = await User.findOne({
       $or: [{ username: req.body.username }, { email: req.body.email }],
     });
