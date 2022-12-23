@@ -1,4 +1,5 @@
 import { NextApiResponse, NextApiRequest } from "next";
+import { conn } from "../../../server/configs/db.config";
 import { Lists } from "../../../server/models/lists.model";
 
 export default async function getUserLists(
@@ -11,6 +12,7 @@ export default async function getUserLists(
       return res.status(200).send("ok");
     }
     if (!req.body.uid) throw new Error("UserId not provided!");
+    await conn();
     if (req.body.lns?.length) {
       const result = await Lists.find({
         userID: req.body.uid,

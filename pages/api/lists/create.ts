@@ -1,6 +1,7 @@
 //For creating lists by using userid
 
 import { NextApiRequest, NextApiResponse } from "next";
+import { conn } from "../../../server/configs/db.config";
 
 import { Lists } from "../../../server/models/lists.model";
 
@@ -15,6 +16,7 @@ export default async function createListHandler(
     }
     if (!req.query.uid || !req.query.ln)
       throw new Error("Either un or ln parameters are nor provided.");
+    await conn();
     const result = await new Lists({
       userID: req.query.uid,
       listName: req.query.ln,

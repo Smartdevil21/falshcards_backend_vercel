@@ -1,6 +1,7 @@
 import { NextApiRequest, NextApiResponse } from "next";
 import { User } from "../../../server/models/user.model";
 import * as bcrypt from "bcryptjs";
+import { conn } from "../../../server/configs/db.config";
 
 export default async function updateInfo(
   req: NextApiRequest,
@@ -11,6 +12,7 @@ export default async function updateInfo(
     if (method === "OPTIONS") {
       return res.status(200).send("ok");
     }
+    await conn();
     let user = await User.findOne({ _id: req.body.uid });
     user.password = await bcrypt.hash(req.body.updatedPass, 10);
     const result = await User.findOneAndUpdate({ _id: req.body.uid }, user);

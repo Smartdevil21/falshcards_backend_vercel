@@ -1,4 +1,5 @@
 import { NextApiRequest, NextApiResponse } from "next";
+import { conn } from "../../../server/configs/db.config";
 import { User } from "../../../server/models/user.model";
 
 export default async function verifyUserEmailHandler(
@@ -10,6 +11,7 @@ export default async function verifyUserEmailHandler(
     if (method === "OPTIONS") {
       return res.status(200).send("ok");
     }
+    await conn();
     const result = await User.findOneAndUpdate(
       { _id: req.query.uid },
       { emailVerified: true },
