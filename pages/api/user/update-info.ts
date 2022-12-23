@@ -22,6 +22,6 @@ export default async function updateInfo(
     console.log(`${error}`);
     res
       .status(400)
-      .json({ success: false, data: { message: "Something went wrong!" } });
+      .json({ success: false, data: { message: `Error: ${error}` } });
   }
 }
