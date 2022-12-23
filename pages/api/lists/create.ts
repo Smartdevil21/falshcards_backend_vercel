@@ -2,7 +2,7 @@
 
 import { NextApiRequest, NextApiResponse } from "next";
 
-const Lists = require("../../models/lists.model");
+import { Lists } from "../../../server/models/lists.model";
 
 export default async function createListHandler(
   req: NextApiRequest,
@@ -11,7 +11,7 @@ export default async function createListHandler(
   try {
     if (!req.query.uid || !req.query.ln)
       throw new Error("Either un or ln parameters are nor provided.");
-    const result = await Lists({
+    const result = await new Lists({
       userID: req.query.uid,
       listName: req.query.ln,
     }).save();
