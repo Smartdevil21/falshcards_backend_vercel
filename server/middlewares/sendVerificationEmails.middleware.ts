@@ -43,7 +43,7 @@ export async function sendVerificationEmail({
                 <h2>Thanks for signing up, <span style="color: #ff7d39;">${username}</span>!</h2>
                 <p>Please verify your email to join the community and get access to the core features of the project by clicking the link below!</p>
                 <br/>
-                <a href='${process.env.DEPLOYED_URL}/user/verify-email?uid=${userID}'><button style="
+                <a href='${process.env.DEPLOYED_URL}/api/user/verify?uid=${userID}'><button style="
                 background-color: #ff7d39;
                 color: #fff;
                 border: none;
