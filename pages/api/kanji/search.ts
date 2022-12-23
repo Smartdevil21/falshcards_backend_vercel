@@ -9,6 +9,10 @@ export default async function searchKanjiHandler(
   res: NextApiResponse
 ) {
   try {
+    const { method } = req;
+    if (method === "OPTIONS") {
+      return res.status(200).send("ok");
+    }
     const result = await Kanjis.find({
       $or: [{ word: req.body.keyword }, { meaning: req.body.keyword }],
     });

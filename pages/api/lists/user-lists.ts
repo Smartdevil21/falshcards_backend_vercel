@@ -6,6 +6,10 @@ export default async function getUserLists(
   res: NextApiResponse
 ) {
   try {
+    const { method } = req;
+    if (method === "OPTIONS") {
+      return res.status(200).send("ok");
+    }
     if (!req.body.uid) throw new Error("UserId not provided!");
     if (req.body.lns?.length) {
       const result = await Lists.find({

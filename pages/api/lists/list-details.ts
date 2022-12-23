@@ -8,6 +8,10 @@ export default async function getAllKanjisOfList(
   res: NextApiResponse
 ) {
   try {
+    const { method } = req;
+    if (method === "OPTIONS") {
+      return res.status(200).send("ok");
+    }
     const result = await Kanjis.find({ word: { $in: req.body.listArr } });
     res.status(200).json({ success: true, data: result });
   } catch (error) {

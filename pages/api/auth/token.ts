@@ -10,6 +10,10 @@ export default async function loginUsingToken(
   res: NextApiResponse
 ) {
   try {
+    const { method } = req;
+    if (method === "OPTIONS") {
+      return res.status(200).send("ok");
+    }
     await conn();
     const uid = await jwt.verify(
       req.query.t as string,

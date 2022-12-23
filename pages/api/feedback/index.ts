@@ -18,6 +18,10 @@ export default async function handleFeedback(
   res: NextApiResponse
 ) {
   try {
+    const { method } = req;
+    if (method === "OPTIONS") {
+      return res.status(200).send("ok");
+    }
     await conn();
     const result = await new Feedback(req.body).save();
     res.status(200).json({

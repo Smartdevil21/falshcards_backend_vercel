@@ -9,6 +9,10 @@ export default async function getkanjisByLevelHandler(
   res: NextApiResponse
 ) {
   try {
+    const { method } = req;
+    if (method === "OPTIONS") {
+      return res.status(200).send("ok");
+    }
     await conn();
     if (!req.query.l) throw new Error("Level required!");
     const result = await Kanjis.find({ level: req.query.l });

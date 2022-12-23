@@ -9,7 +9,10 @@ export default async function updateList(
   res: NextApiResponse
 ) {
   try {
-    console.log(req.query.action);
+    const { method } = req;
+    if (method === "OPTIONS") {
+      return res.status(200).send("ok");
+    }
     await conn();
     const list = await Lists.findOne({
       listName: req.query.ln,

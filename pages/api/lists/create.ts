@@ -9,6 +9,10 @@ export default async function createListHandler(
   res: NextApiResponse
 ) {
   try {
+    const { method } = req;
+    if (method === "OPTIONS") {
+      return res.status(200).send("ok");
+    }
     if (!req.query.uid || !req.query.ln)
       throw new Error("Either un or ln parameters are nor provided.");
     const result = await new Lists({

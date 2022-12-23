@@ -10,6 +10,10 @@ export default async function addKanjiHandler(
   res: NextApiResponse
 ) {
   try {
+    const { method } = req;
+    if (method === "OPTIONS") {
+      return res.status(200).send("ok");
+    }
     await conn();
     const kanjis = await Kanjis.find();
     const kanjisObj = arrayToObjectForKanjiWordData(kanjis);

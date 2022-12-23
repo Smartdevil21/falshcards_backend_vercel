@@ -9,6 +9,10 @@ export default async function getAllKanjisHandler(
   res: NextApiResponse
 ) {
   try {
+    const { method } = req;
+    if (method === "OPTIONS") {
+      return res.status(200).send("ok");
+    }
     await conn();
     const result = await Kanjis.aggregate([
       { $sample: { size: req.body.limit || 100 } },

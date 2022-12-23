@@ -9,6 +9,10 @@ export default async function getKanjis(
   res: NextApiResponse
 ) {
   try {
+    const { method } = req;
+    if (method === "OPTIONS") {
+      return res.status(200).send("ok");
+    }
     await conn();
     const response = await Kanjis.find({
       $or: [
