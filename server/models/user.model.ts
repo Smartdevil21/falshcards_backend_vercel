@@ -2,9 +2,8 @@ import mongoose, { Schema } from "mongoose";
 import { Middleware } from "next/dist/lib/load-custom-routes";
 import { NextMiddleware } from "next/server";
 import * as validator from "validator";
-
-const bcrypt = require("bcryptjs");
-const jwt = require("jsonwebtoken");
+import bcrypt from "bcryptjs";
+import jwt, { Secret } from "jsonwebtoken";
 
 const userSchema: Schema = new mongoose.Schema({
   username: {
@@ -27,12 +26,6 @@ const userSchema: Schema = new mongoose.Schema({
     unique: true,
     trim: true,
   },
-  // lists: [
-  //     {
-  //         listName: String,
-  //         listItems: [String],
-  //     },
-  // ],
   password: {
     type: String,
     required: true,
@@ -43,7 +36,7 @@ userSchema.methods.generateToken = async function () {
   try {
     const resultantToken = await jwt.sign(
       { _id: this._id.toString() },
-      process.env.JWT_KEY
+      process.env.JWT_KEY as Secret
     );
     await this.save();
     return resultantToken;
