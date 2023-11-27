@@ -17,7 +17,8 @@ export default async function searchKanjiHandler(
     const result = await Kanjis.find({
       $or: [{ word: req.body.keyword }, { meaning: req.body.keyword }],
     });
-    if (!result.length) throw new Error("No results found!");
+    if (!result.length)
+      throw new Error(`No results found for ${req.body.keyword}`);
     res.status(200).json({ success: true, data: result });
   } catch (error) {
     console.log(`err in POST /kanji/search : ${error}`);
